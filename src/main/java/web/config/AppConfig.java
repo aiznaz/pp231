@@ -51,7 +51,7 @@ public class AppConfig {
     }
 
 
-    //метод, который возвращает объект
+    //метод, который возвращает объект Properties, в который переданы свойства
     public Properties getHibernateProperties() {
         Properties properties = new Properties();
         properties.put("hibernate.show_sql", env.getRequiredProperty("hibernate.show_sql"));

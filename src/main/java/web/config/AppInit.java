@@ -32,6 +32,7 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
         return new String[]{"/"};
     }
 
+    //метод, который регистрирует фильтр для установки кодировки символов
     @Override
     public void onStartup(ServletContext aServletContext) throws ServletException {
         super.onStartup(aServletContext);
@@ -39,12 +40,9 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
         encodingFilter.setInitParameter("encoding", "UTF-8");
         encodingFilter.setInitParameter("forceEncoding", "true");
         encodingFilter.addMappingForUrlPatterns(null, true, "/*");
-        registerHiddenFieldFilter(aServletContext);
+        aServletContext.addFilter("hiddenHttpMethodFilter", new HiddenHttpMethodFilter()) //добавление фильтра, который передаст запрос в нужный метод контроллера
+               .addMappingForUrlPatterns(null, true, "/*");
     }
 
-    private void registerHiddenFieldFilter(ServletContext aServletContext) {
-        aServletContext.addFilter("hiddenHttpMethodFilter", new HiddenHttpMethodFilter())
-                .addMappingForUrlPatterns(null, true, "/*");
-    }
 
 }
